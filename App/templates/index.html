@@ -1,0 +1,94 @@
+{% extends "layout.html" %}
+{% block title %}App Users{% endblock %}
+{% block page %}App Users{% endblock %}
+
+{{ super() }}
+{% block content %}
+   
+    <body>
+      
+      <div class="filter">
+        <div class="input-field col s12">
+          <select id="target-muscles" onchange="filter()">
+            <option value="" disabled selected >Choose a target muscle</option>
+            {% for muscle in attributes.muscles %}
+                <option value="{{muscle}}">{{muscle}}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      
+      
+      
+
+      <div class="searchSection">
+  
+        <input type="text" id="search" placeholder="Search Workout.." name="search">
+        <button id= "searchBtn" onclick="search()"><i class="fa fa-search"></i></button>
+
+    </div>
+
+    <div id="exercise-container">
+      {% for exercise in exercises[:12] %}
+        <div class="exercise-item">
+          <h2>{{ exercise.exercise_name }}</h2>
+          <p><strong><iframe src="{{ exercise.videoURL[0] }}" frameborder="0" allowfullscreen></iframe></strong></p>
+          <p><strong>Category: </strong>{{ exercise.Category }}</p>
+          <p><strong>Difficulty: </strong>{{ exercise.Difficulty }}</p>
+          <p><strong>Force: </strong>{{ exercise.Force }}</p>
+          <p><strong>Grips: </strong>{{ exercise.Grips }}</p>
+          <p><strong>Primary Target: </strong>{{ exercise.target.Primary|join(', ') }}</p>
+          {% if exercise.youtubeURL %}
+            <p><strong>Youtube: </strong><a href="{{ exercise.youtubeURL }}">{{ exercise.youtubeURL }}</a></p>
+          {% endif %}
+          
+           
+
+        </div>
+        {% if loop.index % 12 == 0 %}
+          </div>
+          <div id="pagination">
+            {% if page > 1 %}
+              <a href="{{ url_for('index_views.exercises', page=page - 1) }}">Back</a>
+            {% endif %}
+            <a href="{{ url_for('index_views.exercises', page=page + 1) }}">Next Page</a>
+          </div>
+          <div id="page{{ loop.index // 12 + 1 }}"></div>
+          <div id="exercise-container">
+        {% endif %}
+      {% endfor %}
+    </div>
+
+    <script>
+      var input = document.getElementById("search");
+            input.addEventListener("keypress", function(event) {
+              if (event.key === "Enter") {
+                event.preventDefault();
+                document.getElementById("searchBtn").click();
+              }
+            });
+
+            function search(){
+              let workout = document.getElementById("search").value;
+              //console.log(workout)
+              let url = "/workouts/" + workout;
+              window.location.href = url;
+            }
+
+            function filter(){
+              var muscle = document.getElementById("target-muscles").value;
+              let url = "/muscles/" + muscle;
+              window.location.href = url;
+
+            }
+      
+
+           
+            
+    </script>
+    
+    </body>
+
+
+
+{% endblock %}

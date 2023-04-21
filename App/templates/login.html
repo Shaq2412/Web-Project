@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+{% block content %}
+
+<style>
+  body{
+    height: 100vh;
+    background-image: url('https://wallpapercave.com/wp/wp8235000.jpg');
+    background-size:cover;
+    background-position: center;
+  }
+
+  a{
+    color: orange;
+  }
+
+  a:hover{
+    color: brown;
+  }
+
+  input{
+    color:orange;
+  }
+
+  .submit_btn{
+    color: orange;
+    background-color: rgb(70, 67, 67);
+    width: 100px;
+    height: 40px;
+    transition: scale 0.5 ease;
+    border-radius: 5px;
+  }
+
+  .submit_btn:hover{
+    color: brown;
+    cursor: pointer;
+    
+  }
+
+  .container{
+    position: relative;
+    width: 500px;
+    
+  }
+
+</style>
+
+
+<body id="login">
+  <div class="container">
+
+      <h4 class="center" style= "color: orange;">Login</h4>
+      <form id="loginForm" method="POST" action="/login" style="padding:1em">
+
+        <div class="row">
+          <div class="input-field col s12">
+            <input placeholder="username" id="username" name="username" type="text" class="validate">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input placeholder="password" name="password" id="password" type="password" class="validate">
+          </div>
+        </div>
+        <div class="row justify-content">
+          <div class="col s4 card-action">
+            <input type="submit" class="submit_btn" value="Login">
+          </div>
+
+          <div class="col s8 card-action right-align">
+            <a href="/signup">Don't have an account? Sign Up</a>
+          </div>
+        </div>
+
+      </form>
+
+  </div>
+</body>
+{% endblock %}
