@@ -35,9 +35,18 @@
           <p><strong><iframe src="{{ exercise.videoURL[0] }}" frameborder="0" allowfullscreen></iframe></strong></p>
           <p><strong>Category: </strong>{{ exercise.Category }}</p>
           <p><strong>Difficulty: </strong>{{ exercise.Difficulty }}</p>
+          {%if exercise.Force%}
           <p><strong>Force: </strong>{{ exercise.Force }}</p>
+          {%endif%}
+          {%if exercise.Grips%}
           <p><strong>Grips: </strong>{{ exercise.Grips }}</p>
+          {%endif%}
+          {%if exercise.target.Primary%}
           <p><strong>Primary Target: </strong>{{ exercise.target.Primary|join(', ') }}</p>
+          {%endif%}
+          {%if exercise.target.Secondary%}
+          <p><strong>Secondary Target: </strong>{{ exercise.target.Secondary|join(', ') }}</p>
+          {%endif%}
           {% if exercise.youtubeURL %}
             <p><strong>Youtube: </strong><a href="{{ exercise.youtubeURL }}">{{ exercise.youtubeURL }}</a></p>
           {% endif %}
@@ -79,6 +88,7 @@
               var muscle = document.getElementById("target-muscles").value;
               let url = "/muscles/" + muscle;
               window.location.href = url;
+              
 
             }
       
