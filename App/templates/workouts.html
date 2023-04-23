@@ -45,6 +45,13 @@
         {% if show  == "yes" %}
         <h2 style="color: white;">Days:</h2>
         
+
+        <div>
+            {%for day in days%}
+                <div class = "dayTitle">{{day.title}}</div>
+            {% endfor %}
+        </div>
+
         <div classs="addDay">
             <form action="/addDay" method="POST" class="addDayForm">
                 <div>
@@ -62,11 +69,7 @@
         {% endif%}
 
 
-        <div>
-            {%for day in days%}
-                <div class = "dayTitle">{{day.title}}</div>
-            {% endfor %}
-        </div>
+        
 
     </div>
 
@@ -91,6 +94,7 @@ function routine(){
     }
     .dayTitle{
         color:white;
+        font-size: 20px;
     }
 
     .routineTitle:hover{

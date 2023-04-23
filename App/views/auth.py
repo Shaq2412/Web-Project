@@ -40,6 +40,16 @@ def login_action():
     flash("Invalid Username or Password")
     return redirect('/')
 
+@auth_views.route('/signup', methods=['POST'])
+def signup_action():
+    data = request.form
+    user = create_user(data['username'], data['password'])
+    if user:
+        login_user(user)
+        return redirect('/home')
+    flash("Invalid")
+    return redirect('/')
+
 @auth_views.route('/logout', methods=['GET'])
 @login_required
 def logout_action():

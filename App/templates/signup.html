@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block page %}Sign Up{% endblock %}
+
+
+{% block content %}
+
+<body>
+  
+  <div class="subcontent center-vertical">
+    <h4 class="center" style="color: orange">Sign Up</h4>
+
+    <form id="signupForm" method="POST" action="/signup" style="padding:1em">
+
+      <div class="row" style="color: orange;">
+        <div class="input-field col s12">
+          <input placeholder="john" name="username" type="text" class="validate">
+          <label for="username">Username</label>
+        </div>
+      </div>
+  
+      <div class="row">
+        <div class="input-field col s12">
+          <input placeholder="Some secure password here" name="password" type="password" class="validate">
+          <label for="password">Password</label>
+        </div>
+      </div>
+      <div class="row justify-content">
+        <div class="col s8 card-action left-align" style="margin-left:0;">
+          <a href="/">&larr; Back to Login</a>
+        </div>
+        <div class="col s3 card-action right-align">
+          <input type="submit" class="submit_btn" value="Sign up">
+        </div>
+      </div>
+  
+    </form>
+  </div>
+</body>
+
+<style>
+  body{
+    height: 100vh;
+    background-image: url('https://wallpapercave.com/wp/wp3173151.jpg');
+    background-size:cover;
+    background-position: center;
+  }
+
+  a{
+    color: orange;
+  }
+
+  a:hover{
+    color: brown;
+  }
+
+  input{
+    color:orange;
+  }
+   .submit_btn{
+    color: orange;
+    background-color: rgb(70, 67, 67);
+    width: 100px;
+    height: 40px;
+    transition: scale 0.5 ease;
+    border-radius: 5px;
+  }
+
+  .submit_btn:hover{
+    color: brown;
+    cursor: pointer;
+    
+  }
+
+  .container{
+    position: relative;
+    width: 500px;
+    
+  }
+
+</style>
+{% endblock %}

@@ -23,7 +23,7 @@ def add_routine(title, userId):
     except IntegrityError:
         db.session.rollback()
         return None
-    return user    
+    return newRoutine    
 
 def get_all_routines(userId):
     user = User.query.get(userId)

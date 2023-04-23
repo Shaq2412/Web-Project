@@ -13,6 +13,10 @@ index_views = Blueprint('index_views', __name__, template_folder='../templates')
 def index_page():
     return render_template('login.html')
 
+@index_views.route('/signup', methods=['GET'])
+def signUp_page():
+    return render_template('signup.html')
+
 @index_views.route('/home', methods=['GET'])
 @login_required
 def exercises():
@@ -133,11 +137,6 @@ def init():
     db.create_all()
     create_user('bob', 'bobpass')
     return jsonify(message='db initialized!')
-
-@index_views.route('/drop', methods=['GET'])
-def drop():
-    db.drop_all()
-    return jsonify(message='db dropped!')
 
 @index_views.route('/health', methods=['GET'])
 def health_check():
