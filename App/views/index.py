@@ -134,6 +134,11 @@ def init():
     create_user('bob', 'bobpass')
     return jsonify(message='db initialized!')
 
+@index_views.route('/drop', methods=['GET'])
+def drop():
+    db.drop_all()
+    return jsonify(message='db dropped!')
+
 @index_views.route('/health', methods=['GET'])
 def health_check():
     return jsonify({'status':'healthy'})
