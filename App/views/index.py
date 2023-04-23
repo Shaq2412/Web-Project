@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.models import db
-from App.controllers import create_user
+from App.controllers import *
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 import os
 import http.client
@@ -29,18 +29,25 @@ def exercises():
         'X-RapidAPI-Key': "09f6b51864msh4bb31a9d8466b4bp1a4a5cjsnf805f9baa416",
         'X-RapidAPI-Host': "musclewiki.p.rapidapi.com"
     }
+    #Get exercises for main list
     conn.request("GET", "/exercises", headers=headers)
     res = conn.getresponse()
     data = res.read().decode("utf-8")
     exercise = json.loads(data)
 
     exercise_slice = exercise[start_idx:end_idx]
+
+    #Get attributes for filter
     conn.request("GET", "/exercises/attributes", headers=headers)
 
     res = conn.getresponse()
     data = res.read().decode("utf-8")
     attribute = json.loads(data)
 
+   
+
+    
+        
     return render_template('index.html', exercises=exercise_slice, page=page, attributes=attribute)
    
 @index_views.route('/workouts/<workout>', methods=['GET'])
@@ -61,6 +68,7 @@ def getSearchWorkouts(workout):
         'X-RapidAPI-Host': "musclewiki.p.rapidapi.com"
         }
 
+    #Get exercises for main list
     conn.request("GET", "/exercises?name=" + workout, headers=headers)
 
     res = conn.getresponse()
@@ -69,11 +77,14 @@ def getSearchWorkouts(workout):
 
     exercise_slice = exercise[start_idx:end_idx]
 
+    #Get attributes for filter
     conn.request("GET", "/exercises/attributes", headers=headers)
 
     res = conn.getresponse()
     data = res.read().decode("utf-8")
     attribute = json.loads(data)
+
+
 
     return render_template('index.html', exercises=exercise_slice, page=page, attributes=attribute)
 
@@ -94,6 +105,7 @@ def getWorkoutsForMuscle(muscle):
         'X-RapidAPI-Key': "09f6b51864msh4bb31a9d8466b4bp1a4a5cjsnf805f9baa416",
         'X-RapidAPI-Host': "musclewiki.p.rapidapi.com"
     }
+    #Get exercises for main list
     conn.request("GET", "/exercises?muscle="+muscle, headers=headers)
     res = conn.getresponse()
     data = res.read().decode("utf-8")
@@ -101,12 +113,15 @@ def getWorkoutsForMuscle(muscle):
 
     exercise_slice = exercise[start_idx:end_idx]
 
+    #Get attributes for filter
     conn.request("GET", "/exercises/attributes", headers=headers)
 
     res = conn.getresponse()
     data = res.read().decode("utf-8")
     attribute = json.loads(data)
 
+
+    
 
 
     return render_template('index.html', exercises=exercise_slice, page=page, attributes=attribute)

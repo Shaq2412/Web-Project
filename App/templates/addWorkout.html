@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+
+<body>
+
+    <h1>Add workout</h1>
+    
+    <div class="exercise-item">
+        <h2>{{ exercise.exercise_name }}</h2>
+        <p><strong><iframe src="{{ exercise.videoURL[0] }}" frameborder="0" allowfullscreen></iframe></strong></p>
+        <p><strong>Category: </strong>{{ exercise.Category }}</p>
+        <p><strong>Difficulty: </strong>{{ exercise.Difficulty }}</p>
+        <p><strong>Force: </strong>{{ exercise.Force }}</p>
+        <p><strong>Grips: </strong>{{ exercise.Grips }}</p>
+        <p><strong>Primary Target: </strong>{{ exercise.target.Primary|join(', ') }}</p>
+        {% if exercise.youtubeURL %}
+          <p><strong>Youtube: </strong><a href="{{ exercise.youtubeURL }}">{{ exercise.youtubeURL }}</a></p>
+        {% endif %}    
+
+        <div class="addToList">
+            <form action="/addWorkout" method="POST" class="addWorkout">
+              
+                <select name="routine" id="routine" onchange="selectRoutine()">
+                  <option value="" disabled selected >Select Routine To Add Workout To</option>
+                  {%for routine in routines%}
+                  <option value="{{routine.id}}">{{routine.title}}</option>
+                  {%endfor%}
+                </select>  
+                
+                <select name="day" id="day" onchange="selectDay()">
+                    <option value="" disabled selected >Select Day</option>
+                    {%for day in days%}
+                        
+                            <option value="{{day.id}}">{{routineId}}</option>
+                        
+                    {%endfor%}
+                  </select>  
+                <input type="submit" class="submit_btn" id="submit_btn" value="Add Workout" style="display: none">
+            </form>
+          </div>
+    </div>
+
+</body>
+
+<script>
+    var routineId;
+
+    function selectRoutine(){
+
+        routineId = document.getElementById("routine").value;
+
+        var btn = document.getElementById("submit_btn");
+        btn.style.display = 'block';
+
+        console.log(routineId)
+    }
+
+    
+    
+</script>
+
+<style>
+    /* Style for exercise item */
+  .exercise-item {
+    flex-basis: calc(33.33% - 20px); /* Adjust width for 3 items per row */
+    padding: 5px;
+    border: 1px solid #000;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    background-color: rgb(153, 108, 108)52);
+    width: 500px;
+    text-align: center;
+  }
+  .exercise-item iframe{
+      max-width: 100%;
+      max-height: 100%;
+  }
+  
+  /* Style for exercise item title */
+  .exercise-item h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Style for steps list */
+  .exercise-item ol {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+
+  body{
+    height: 100vh;
+    background-image: url('https://wallpapercave.com/wp/wp8235059.jpg');
+
+    background-size:cover;
+    background-position: center;
+  }
+  
+</style>
+{% endblock %}

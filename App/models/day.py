@@ -5,12 +5,15 @@ class Day(db.Model):
     title = db.Column(db.String, nullable=False)
     #numWorkouts = db.Column(db.Integer, nullable=False)
     workouts = db.relationship('Workout', backref='day')
-    routine_id = db.Column(db.Integer, db.ForeignKey('routine.id'))
+    routineId = db.Column(db.Integer, db.ForeignKey('routine.id'))
 
-    def __init__(self, title):
+    def __init__(self, title, routineId):
         self.title = title 
+        self.routineId = routineId
     
     def toJSON(self):
         return{
+            'id' : self.id,
             'title' : self.title,
+            'routineId' : self.routineId
         }

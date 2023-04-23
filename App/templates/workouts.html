@@ -1,3 +1,101 @@
 {% extends "layout.html" %}
 
-{{ super() }}
+
+
+{% block content %}
+<body>
+    
+    <div classs="addRoutine">
+        <form action="/addRoutine" method="POST" class="addRoutineForm">
+            <div>
+                <input placeholder="title" id="title" name="title" type="text" pattern="[a-z A-Z]*" 
+                  oninvalid="setCustomValidity('Please enter alphabets only. ')" required>
+            </div>
+            
+            <div class="col s4 card-action">
+                <input type="submit" class="submit_btn" value="Add Routine">
+            </div>
+
+        </form>
+
+
+    </div>
+    
+    <!--
+    <div class="routine">
+        {% for routine in routines %}
+            <div class="routineId" id="{{routine.id}}" ">{{routine.id}}</div>
+            <div class="routineTitle" onclick="routine()">{{routine.title}}</div>
+        {% endfor %}
+    </div>
+    -->
+    <div class="routine-select">
+        
+          <select id="routine" onchange="routine()">
+            <option value="" disabled selected >Choose a Routine</option>
+            {% for routine in routines %}
+                <option class ="routineTitle" value="{{routine.id}}">{{routine.title}}</option>
+            {% endfor %}
+          </select>
+
+    </div>
+
+
+    <div class="days">
+        {% if show  == "yes" %}
+        <h2 style="color: white;">Days:</h2>
+        
+        <div classs="addDay">
+            <form action="/addDay" method="POST" class="addDayForm">
+                <div>
+                    <input placeholder="Day" id="day" name="day" type="text" pattern="[a-z A-Z 0-9]*" 
+                      oninvalid="setCustomValidity('Please enter alphabets/letters only. ')" required>
+                </div>
+                <div style="display: none">
+                    <input name="routineId" value="{{routineId}}">
+                </div>
+                <div class="col s4 card-action">
+                    <input type="submit" class="submit_btn" value="Add Day">
+                </div>
+            </form>
+        </div>    
+        {% endif%}
+
+
+        <div>
+            {%for day in days%}
+                <div class = "dayTitle">{{day.title}}</div>
+            {% endfor %}
+        </div>
+
+    </div>
+
+
+</body>
+
+<script>
+
+function routine(){
+    var routine = document.getElementById("routine").value;
+    let url = "/myWorkouts/" + routine;
+    window.location.href = url;
+
+}
+
+</script>
+
+<style>
+    .routineId{
+        
+        display: none;
+    }
+    .dayTitle{
+        color:white;
+    }
+
+    .routineTitle:hover{
+        cursor: pointer;
+    }
+
+</style>
+{% endblock %}

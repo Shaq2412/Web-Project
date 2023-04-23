@@ -11,11 +11,12 @@ class Workout(db.Model):
     primary_target = db.Column(db.String, nullable = False)
     day_id = db.Column(db.Integer, db.ForeignKey('day.id'))
 
-    def __init__(self, name, videoURL, category, primary_target):
+    def __init__(self, name, videoURL, category, primary_target, day_id):
         self.name = name
         self.videoURL = videoURL
         self.category = category
         self.primary_target = primary_target
+        self.id = day_id
 
     def toJSON(self):
         return{
@@ -23,5 +24,6 @@ class Workout(db.Model):
             'name' : self.name,
             'videoURL' : self.videoURL,
             'category' : self.category,
-            'primary_target' : self.primary_target
+            'primary_target' : self.primary_target,
+            'dayId' : day_id
         }
