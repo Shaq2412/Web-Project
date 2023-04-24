@@ -49,7 +49,7 @@
 
         <div>
             {%for day in days%}
-                <div class = "dayTitle" onclick="changeDayTitle()">{{day.title}}</div>
+                <div class = "dayTitle" id="day{{day.id}}"onmouseout="changeDayTitle('{{day.id}}')" onclick="mouseDown('{{day.id}}')">{{day.title}}</div>
                 <i class="fa fa-trash" style="color:red;" onclick="removeDay('{{day.id}}')"></i>
                 <div class="exercise-container">
                 {%for workout in workouts%}
@@ -128,11 +128,26 @@
         let url = "/removeDay/" + dayId;
         window.location.href = url;
     }
+    
+    
+    var editing;
 
-    function changeDayTitle(){
-
-        
+    function mouseDown(dayId){
+        editing = "true"
+        var titleField = document.getElementById("day"+dayId)
+        titleField.contentEditable = true;
     }
+    
+    function changeDayTitle(dayId){
+        if (editing == "true"){
+            var titleField = document.getElementById("day"+dayId)
+            titleField.contentEditable = false;
+            title = titleField.innerHTML;
+            editing = "false";
+            
+            let url = "/renameDay-" + dayId + "/" + title;
+            window.location.href = url;
+        }
     
     function alternative(workoutID, category){
         let url = "/alternatives" + workoutID + "/" + category;
