@@ -101,7 +101,7 @@ def addWorkoutPage(exerciseId):
 
     return render_template('addWorkout.html', exercise=exercise, routines = routines, show=show)
 
-@workouts_views.route('/addWorkout/routine<routineId>-<exerciseId>', methods=['GET'])
+@workouts_views.route('/addWorkout/routine<routineId>/<exerciseId>', methods=['GET'])
 @login_required
 def selectDay(routineId, exerciseId):
    
