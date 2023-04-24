@@ -31,7 +31,7 @@ def add_workout(name, videoURL, category, primary_target, day_id):
 
 def get_all_workouts(day_id):
     user = User.query.get(day_id)
-    return Day.query.filter_by(day_id = day_id).all()
+    return Workout.query.filter_by(day_id = day_id).all()
 
 def get_all_workouts_json(routineId):
     workouts = get_all_workouts(day_id)
@@ -39,6 +39,14 @@ def get_all_workouts_json(routineId):
         return None
     
     workouts = [ workout.toJSON() for workout in workouts]
+    return workouts
+
+def get_all_json():
+    workouts = Workout.query.all()
+    if not workouts:
+        return None
+
+    workouts = [workout.toJSON() for workout in workouts]
     return workouts
 
 

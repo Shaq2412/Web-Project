@@ -16,7 +16,7 @@ class Workout(db.Model):
         self.videoURL = videoURL
         self.category = category
         self.primary_target = primary_target
-        self.id = day_id
+        self.day_id = day_id
 
     def toJSON(self):
         return{
@@ -25,5 +25,5 @@ class Workout(db.Model):
             'videoURL' : self.videoURL,
             'category' : self.category,
             'primary_target' : self.primary_target,
-            'dayId' : day_id
+            'day_id' : self.day_id
         }
