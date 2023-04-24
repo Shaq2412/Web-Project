@@ -3,6 +3,7 @@
 
 
 {% block content %}
+
 <body>
     
     <div classs="addRoutine">
@@ -48,14 +49,32 @@
 
         <div>
             {%for day in days%}
-                <div class = "dayTitle">{{day.title}}</div>
+                <div class = "dayTitle" onclick="changeDayTitle()">{{day.title}}</div>
+                <i class="fa fa-trash" style="color:white;" onclick="removeDay('{{day.id}}')"></i>
+                <div class="exercise-container">
                 {%for workout in workouts%}
                     {%if workout.day_id == day.id%}
-                        <div class ="workout" style="color:orange">{{workout.name}}</div>
+
+                        <div class ="exercise-item">
+                            
+                            <h2>{{workout.name}}</h2>
+                            <p><iframe src="{{workout.videoURL}}" frameborder="0" allowfullscreen></iframe></p>
+                            <p><strong>Category: </strong>{{workout.category}}</p>
+                            <p><strong>Primary Target: </strong>{{workout.primary_target}}</p>
+
+                            <div class="removeIcon"  id = "removeIcon">
+                                <i class="fa fa-trash" style="color:red;" onclick="remove('{{workout.id}}')"></i>
+                            </div>
+
+                        </div>
+                        
+                       
                     {%endif%}
                 {%endfor%}
+                </div>
                 
             {% endfor %}
+
         </div>
 
         <div classs="addDay">
@@ -71,7 +90,9 @@
                     <input type="submit" class="submit_btn" value="Add Day">
                 </div>
             </form>
-        </div>    
+        </div>   
+        
+        
         {% endif%}
 
 
@@ -84,20 +105,38 @@
 
 <script>
 
-function routine(){
-    var routine = document.getElementById("routine").value;
-    let url = "/myWorkouts/" + routine;
-    window.location.href = url;
+    function routine(){
+        var routine = document.getElementById("routine").value;
+        let url = "/myWorkouts/" + routine;
+        window.location.href = url;
 
-}
+    }
+
+    function remove(workoutId){
+        //var deleteIcon = document.getElementsByClassName("removeIcon")
+        //deleteIcon.style.display = 'visible';
+
+        console.log(workoutId)
+        let url = "/removeWorkout/" + workoutId;
+        window.location.href = url;
+        
+    }
+
+    function removeDay(dayId){
+        let url = "/removeDay/" + dayId;
+        window.location.href = url;
+    }
+
+    function changeDayTitle(){
+
+        
+    }
+
+
 
 </script>
 
 <style>
-    .routineId{
-        
-        display: none;
-    }
     .dayTitle{
         color:white;
         font-size: 20px;
@@ -105,6 +144,54 @@ function routine(){
 
     .routineTitle:hover{
         cursor: pointer;
+    }
+
+    i :hover{
+        cursor: pointer;
+    }
+
+    body{
+        height: 100vh;
+        background-attachment: fixed;
+        background-image: url('https://wallpapercave.com/wp/wp2483043.jpg');
+        background-size:cover;
+        background-position: center;
+    }
+
+    .exercise-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        text-align: center;
+    }
+
+     /* Style for exercise item */
+    .exercise-item {
+        flex-basis: calc(30% - 15px); /* Adjust width for 3 items per row */
+        padding: 5px;
+        border: 1px solid #000;
+        margin: 0 auto;
+        margin-bottom: 15px;
+        background-color: rgb(156, 156, 152);
+        
+    }
+    .exercise-item iframe{
+        max-width: 75%;
+        max-height: 75%;
+    }
+    
+    /* Style for exercise item title */
+    .exercise-item h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    
+    /* Style for steps list */
+    .exercise-item ol {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        padding-left: 20px;
     }
 
 </style>

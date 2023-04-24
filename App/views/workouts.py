@@ -144,3 +144,29 @@ def addWorkout():
     add_workout(workoutName, videoURL, category, primaryTarget, dayId)    
 
     return redirect('/myWorkouts/'+ routineId)
+
+@workouts_views.route('/removeWorkout/<workoutId>', methods=['GET'])
+@login_required
+def removeWorkout(workoutId):
+
+    if delete_workout(workoutId):
+        flash('Workout Removed')
+        return redirect('/myWorkouts')
+    
+    else:
+        flash('Delete Unsuccessful')
+        return redirect('/myWorkouts')
+
+@workouts_views.route('/removeDay/<dayId>', methods=['GET'])
+@login_required
+def removeDay(dayId):
+
+    if delete_day(dayId):
+        flash('Day Removed')
+        return redirect('/myWorkouts')
+    
+    else:
+        flash('Delete Unsuccessful')
+        return redirect('/myWorkouts')
+
+

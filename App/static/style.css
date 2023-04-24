@@ -101,6 +101,7 @@ header{
 
     .dropdown{
         display: block;
+        z-index: 1;
     }
 }
 
@@ -120,8 +121,7 @@ body, ul, ol {
     flex-wrap: wrap;
     gap: 10px;
     text-align: center;
-    
-    
+
   }
   
   /* Style for exercise item */
