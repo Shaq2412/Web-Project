@@ -49,6 +49,12 @@
         <div>
             {%for day in days%}
                 <div class = "dayTitle">{{day.title}}</div>
+                {%for workout in workouts%}
+                    {%if workout.day_id == day.id%}
+                        <div class ="workout" style="color:orange">{{workout.name}}</div>
+                    {%endif%}
+                {%endfor%}
+                
             {% endfor %}
         </div>
 
