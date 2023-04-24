@@ -222,3 +222,14 @@ def swapWorkouts():
 
     return redirect('/myWorkouts')
 
+@workouts_views.route('/renameDay-<dayId>/<newTitle>', methods=['GET'])
+@login_required
+def renameDay(dayId, newTitle):
+    if rename_Day(dayId, newTitle):
+        flash('Title Changed')
+    else: 
+        flash('Error changing title')
+            
+    return redirect('/myWorkouts')
+
+    
