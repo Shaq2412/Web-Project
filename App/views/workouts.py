@@ -170,3 +170,55 @@ def removeDay(dayId):
         return redirect('/myWorkouts')
 
 
+
+@workouts_views.route('/alternatives<workoutId>/<category>', methods=['GET'])
+@login_required
+def viewAlternatives(workoutId, category):
+
+    page = request.args.get('page', default=1, type=int) 
+
+
+    per_page = 12  
+    start_idx = (page - 1) * per_page
+    end_idx = start_idx + per_page
+
+    conn = http.client.HTTPSConnection("musclewiki.p.rapidapi.com")
+
+    headers = {
+        'X-RapidAPI-Key': "62ef012002msh9f081cf263c1a11p1bf1e1jsn5ff435659594",
+        'X-RapidAPI-Host': "musclewiki.p.rapidapi.com"
+        }
+
+    #Get exercises for main list
+    conn.request("GET", "/exercises?category=" + category, headers=headers)
+
+    res = conn.getresponse()
+    data = res.read().decode("utf-8")
+    exercise = json.loads(data)
+
+    exercise_slice = exercise[start_idx:end_idx]
+
+    return render_template('/alternatives.html', exercises = exercise_slice, page=page, workoutId = workoutId)
+
+@workouts_views.route('/alternativeWorkout', methods=['POST'])
+@login_required
+def swapWorkouts():
+    data = request.form
+    workoutId = data['workoutId']
+    name = data['workoutName']
+    videoURL = data['videoUrl']
+    category = data['category']
+    primary_target = data['primaryTarget']
+
+    workout = Workout.query.get(workoutId)
+    day_id = workout.day_id
+
+
+    if alternativeRoutine(workoutId, name, videoURL, category, primary_target, day_id):
+        flash('Workout Swapped')
+
+    else: 
+        flash('Error! Workout did not Swap')
+
+    return redirect('/myWorkouts')
+

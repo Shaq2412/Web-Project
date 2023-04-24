@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+
+{% block content %}
+<body>
+    <h1>Alternatives: </h1>
+    {% for exercise in exercises[:12] %}
+        <div class="exercise-item">
+          <h2>{{ exercise.exercise_name }}</h2>
+          <p><strong><iframe src="{{ exercise.videoURL[0] }}" frameborder="0" allowfullscreen></iframe></strong></p>
+          <p><strong>Category: </strong>{{ exercise.Category }}</p>
+          <p><strong>Difficulty: </strong>{{ exercise.Difficulty }}</p>
+          <p><strong>Force: </strong>{{ exercise.Force }}</p>
+          <p><strong>Grips: </strong>{{ exercise.Grips }}</p>
+          <p><strong>Primary Target: </strong>{{ exercise.target.Primary|join(', ') }}</p>
+          {% if exercise.youtubeURL %}
+            <p><strong>Youtube: </strong><a href="{{ exercise.youtubeURL }}">{{ exercise.youtubeURL }}</a></p>
+          {% endif %}
+          
+            
+            <form  method="POST" action="/alternativeWorkout" class="alternativeForm">
+                <div class="formValues" style="display: none;" >
+                    <input name="workoutName" type="text" value="{{exercise.exercise_name}}">
+                    <input name="videoUrl" type="text" value="{{exercise.videoURL[0]}}">
+                    <input name="category" type="text" value="{{exercise.Category}}">
+                    <input name="primaryTarget" type="text" value="{{exercise.target.Primary}}">
+                    <input name="workoutId" type="number" value="{{workoutId}}">
+                </div>
+                
+                <input type="submit" class="submit_btn" id="submit_btn" value="Swap Workout">
+            </form>
+        </div>
+
+        {% if loop.index % 12 == 0 %}
+          </div>
+          <div id="pagination">
+            {% if page > 1 %}
+              <a href="{{ url_for('index_views.exercises', page=page - 1) }}">Back</a>
+            {% endif %}
+            <a href="{{ url_for('index_views.exercises', page=page + 1) }}">Next Page</a>
+          </div>
+          <div id="page{{ loop.index // 12 + 1 }}"></div>
+          <div id="exercise-container">
+        {% endif %}
+    {%endfor%}
+</body>
+
+<script>
+
+</script>
+
+<style>
+    .exercise-item{
+        width: 350px;
+    }
+</style>
+{% endblock %}

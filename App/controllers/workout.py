@@ -49,5 +49,37 @@ def get_all_json():
     workouts = [workout.toJSON() for workout in workouts]
     return workouts
 
+def delete_workout(workoutId):
+    workout = Workout.query.get(workoutId)
+    if workout:
+        db.session.delete(workout)
+        db.session.commit()
+        return True
+    return None
+
+def rename_Day(dayId, title):
+    day = Day.query.get(dayId)
+    if day:
+      day.title = title
+      db.session.add(day)
+      db.session.commit()
+      return True
+    return None
+
+def alternativeRoutine(workoutId, name, videoURL, category, primary_target, day_id):
+	workout = Workout.query.get(workoutId)
+	if workout:
+		workout.name = name
+		workout.videoURL = videoURL
+		workout.category = category
+		workout.primary_target = primary_target
+		workout.day_id = day_id
+		db.session.add(workout)
+		db.session.commit()
+		return True
+	return None
+
+
+
 
 

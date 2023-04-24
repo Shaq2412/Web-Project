@@ -32,34 +32,4 @@ def update_user(id, username):
         return db.session.commit()
     return None
 
-def delete_workout(workoutId):
-    workout = Workout.query.get(workoutId)
-    if workout:
-        db.session.delete(workout)
-        db.session.commit()
-        return True
-    return None
 
-def delete_day(dayId):
-    day = Day.query.get(dayId)
-
-    workouts = Workout.query.filter_by(day_id = dayId).all()
-
-    #delete all workouts that belong to that day
-    for workout in workouts:
-        delete_workout(workout.id)
-
-    if day:
-        db.session.delete(day)
-        db.session.commit()
-        return True
-    return None
-    
-def rename_Day(dayId, title):
-    day = Day.query.get(dayId)
-    if day:
-      day.title = title
-      db.session.add(day)
-      db.session.commit()
-      return True
-    return None

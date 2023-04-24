@@ -48,3 +48,28 @@ def get_days_json():
     
     days = [ day.toJSON() for day in days]
     return days
+
+def delete_day(dayId):
+    day = Day.query.get(dayId)
+
+    workouts = Workout.query.filter_by(day_id = dayId).all()
+
+    #delete all workouts that belong to that day
+    for workout in workouts:
+        delete_workout(workout.id)
+
+    if day:
+        db.session.delete(day)
+        db.session.commit()
+        return True
+    return None
+    
+def rename_Day(dayId, title):
+    day = Day.query.get(dayId)
+    if day:
+      day.title = title
+      db.session.add(day)
+      db.session.commit()
+      return True
+    return None
+

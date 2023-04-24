@@ -65,7 +65,9 @@
                             <div class="removeIcon"  id = "removeIcon">
                                 <i class="fa fa-trash" style="color:red;" onclick="remove('{{workout.id}}')"></i>
                             </div>
-
+                            <div class="alternative">
+                                <button class="alt_btn" onclick="alternative('{{workout.id}}', '{{workout.category}}')">Get Alternative Workout</button>
+                            </div>
                         </div>
                         
                        
@@ -130,6 +132,12 @@
     function changeDayTitle(){
 
         
+    }
+    
+    function alternative(workoutID, category){
+        let url = "/alternatives" + workoutID + "/" + category;
+        window.location.href = url;
+
     }
 
 
