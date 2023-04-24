@@ -13,9 +13,7 @@
           <p><strong>Force: </strong>{{ exercise.Force }}</p>
           <p><strong>Grips: </strong>{{ exercise.Grips }}</p>
           <p><strong>Primary Target: </strong>{{ exercise.target.Primary|join(', ') }}</p>
-          {% if exercise.youtubeURL %}
-            <p><strong>Youtube: </strong><a href="{{ exercise.youtubeURL }}">{{ exercise.youtubeURL }}</a></p>
-          {% endif %}
+          
           
             
             <form  method="POST" action="/alternativeWorkout" class="alternativeForm">
@@ -52,6 +50,18 @@
 <style>
     .exercise-item{
         width: 350px;
+       
+      
+      display: inline-block;
+    }
+    #submit_btn{
+      background-color: rgb(59, 59, 59)
+    }
+    #submit_btn:hover{
+      background-color: black
+    }
+    #pagination{
+      padding-left: 17%;
     }
 </style>
 {% endblock %}
