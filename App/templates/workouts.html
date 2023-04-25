@@ -44,13 +44,13 @@
 
     <div class="days">
         {% if show  == "yes" %}
-        <h2 style="color: orange;">Days:</h2>
+        <h2 style="color: white;">Days:</h2>
         
 
         <div>
             {%for day in days%}
                 <div class = "dayTitle" id="day{{day.id}}"onmouseout="changeDayTitle('{{day.id}}')" onclick="mouseDown('{{day.id}}')">{{day.title}}</div>
-                <i class="fa fa-trash" style="color:red;" onclick="removeDay('{{day.id}}')"></i>
+                <i class="fa fa-trash" style="color:white;" onclick="removeDay('{{day.id}}')"></i>
                 <div class="exercise-container">
                 {%for workout in workouts%}
                     {%if workout.day_id == day.id%}
@@ -62,11 +62,13 @@
                             <p><strong>Category: </strong>{{workout.category}}</p>
                             <p><strong>Primary Target: </strong>{{workout.primary_target}}</p>
 
-                            <div class="removeIcon"  id = "removeIcon">
-                                <i class="fa fa-trash" style="color:red;" onclick="remove('{{workout.id}}')"></i>
-                            </div>
+                            
                             <div class="alternative">
                                 <button class="alt_btn" onclick="alternative('{{workout.id}}', '{{workout.category}}')">Get Alternative Workout</button>
+                            </div>
+
+                            <div class="removeIcon"  id = "removeIcon">
+                                <i class="fa fa-trash" style="color:red;" onclick="remove('{{workout.id}}')"></i>
                             </div>
                         </div>
                         
@@ -128,8 +130,7 @@
         let url = "/removeDay/" + dayId;
         window.location.href = url;
     }
-    
-    
+
     var editing;
 
     function mouseDown(dayId){
@@ -137,7 +138,6 @@
         var titleField = document.getElementById("day"+dayId)
         titleField.contentEditable = true;
     }
-    
     function changeDayTitle(dayId){
         if (editing == "true"){
             var titleField = document.getElementById("day"+dayId)
@@ -148,17 +148,21 @@
             let url = "/renameDay-" + dayId + "/" + title;
             window.location.href = url;
         }
+        
+
+        
+    }
     
     function alternative(workoutID, category){
         let url = "/alternatives" + workoutID + "/" + category;
         window.location.href = url;
-
     }
+
+    
 
 
 
 </script>
-
 <style>
     .dayTitle{
         color:white;
